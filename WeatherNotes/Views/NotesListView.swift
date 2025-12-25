@@ -36,7 +36,9 @@ struct NotesListView: View {
                     }
                 }
                 .onDelete { indexSet in
-                    vm.deleteNotes(at: indexSet)
+                    vm.delete(at: indexSet)
+                    // MARK: - UserDefaults
+                    //                    vm.deleteNotes(at: indexSet)
                 }
             }
             .navigationTitle("Weather Notes")
