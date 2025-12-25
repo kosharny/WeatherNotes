@@ -12,6 +12,8 @@ struct AddNoteView: View {
     @ObservedObject var vm: NotesListViewModel
     @State private var text = ""
     @State private var isLoading = false
+    @State private var errorMessage = ""
+    @State private var showErrorAlert = false
     @Binding var showAddNote: Bool
     
     let weatherService = WeatherService()
@@ -33,6 +35,11 @@ struct AddNoteView: View {
                 .disabled(text.isEmpty || isLoading)
             }
             .navigationTitle("New note")
+            .alert("Error", isPresented: $showErrorAlert) {
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
     
@@ -56,7 +63,11 @@ struct AddNoteView: View {
             // MARK: - UserDefaults
             //            vm.addNote(text: text, weather: weather)
         } catch {
-            print("Weather error:", error)
+            await MainActor.run {
+                self.errorMessage = error.localizedDescription
+                self.showErrorAlert = true
+                self.isLoading = false
+            }
         }
         isLoading = false
     }
