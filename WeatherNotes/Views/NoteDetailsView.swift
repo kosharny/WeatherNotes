@@ -20,7 +20,7 @@ struct NoteDetailsView: View {
 
                 Text(vm.formattedDate)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
 
                 Divider()
 
@@ -43,7 +43,7 @@ struct NoteDetailsView: View {
 
                     Text(vm.note.weather.city)
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
